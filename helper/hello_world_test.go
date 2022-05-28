@@ -9,6 +9,56 @@ import (
 	"runtime"
 )
 
+func BenchmarkTable(b *testing.B) {
+	benchmarks := []struct {
+		name string
+		request string
+	} {
+		{
+			name: "Rikaz",
+			request: "Rikaz",
+		},
+		{
+			name: "Fawaiz",
+			request: "Fawaiz",
+		},
+	}
+
+	for _, benchmark := range benchmarks {
+		b.Run(benchmark.name, func(b *testing.B) {
+			for i:=0; i<b.N; i++ {
+				HelloWorld(benchmark.request)
+			}
+		})
+
+	}
+}
+
+func BenchmarkSub(b *testing.B) {
+	b.Run("Rikaz", func(b *testing.B) {
+		for i:=0; i<b.N; i++ {
+			HelloWorld("Rikaz")
+		}
+	})
+	b.Run("Fawaiz", func(b *testing.B) {
+		for i:=0; i<b.N; i++ {
+			HelloWorld("Fawaiz")
+		}
+	})
+}
+
+func BenchmarkHelloWorld1(b *testing.B) {
+	for i:=0; i<b.N; i++ {
+		HelloWorld("Rikaz")
+	}
+}
+
+func BenchmarkHelloWorld2(b *testing.B) {
+	for i:=0; i<=b.N; i++ {
+		HelloWorld("Fawaiz")
+	}
+}
+
 func TestTableTest(t *testing.T) { //rikaz ver
 	slice1 := []string{"rikaz","fawaiz","haerul","afgani"}
 	for _, val := range slice1 {
